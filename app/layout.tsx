@@ -1,4 +1,13 @@
 import './globals.css'
+import {apiPlugin, storyblokInit} from "@storyblok/react";
+import {StoryblokComponents} from "../components/components-list";
+
+storyblokInit({
+    accessToken: process.env.STORYBLOK_TOKEN,
+    use: [apiPlugin],
+    components: StoryblokComponents
+})
+
 
 export default function RootLayout({
   children,
