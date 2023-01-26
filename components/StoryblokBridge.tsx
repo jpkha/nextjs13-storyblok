@@ -1,15 +1,15 @@
 'use client'
-import { loadStoryblokBridge } from "@storyblok/js";
+import { loadStoryblokBridge } from '@storyblok/js'
 
 const StoryblokBridge = () => {
-    loadStoryblokBridge().then(() => {
-        const { StoryblokBridge, location } = window
-        const storyblokInstance = new StoryblokBridge()
-        storyblokInstance.on(['published', 'change'], () => {
-            location.reload()
-        })
+  loadStoryblokBridge().then(() => {
+    const { StoryblokBridge, location } = window
+    const storyblokInstance = new StoryblokBridge()
+    storyblokInstance.on(['published', 'change'], () => {
+      location.reload()
     })
-    return <></>
+  })
+  return <></>
 }
 
-export default StoryblokBridge;
+export default StoryblokBridge

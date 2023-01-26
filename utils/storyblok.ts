@@ -1,9 +1,6 @@
-import {
-  storyblokInit,
-  apiPlugin,
-} from '@storyblok/js'
+import { storyblokInit, apiPlugin } from '@storyblok/js'
 
-const storyblokToken = process.env.STORYBLOK_TOKEN;
+const storyblokToken = process.env.STORYBLOK_TOKEN
 
 const { storyblokApi } = storyblokInit({
   accessToken: storyblokToken,
@@ -15,6 +12,9 @@ const { storyblokApi } = storyblokInit({
 })
 
 export async function getLinks() {
+  if(!storyblokApi) {
+    return ;
+  }
   const { data } = await storyblokApi.get('cdn/links', {
     version: 'draft',
   })
@@ -22,7 +22,10 @@ export async function getLinks() {
   return links
 }
 
-export async function getStory(slug) {
+export async function getStory(slug: string) {
+  if(!storyblokApi) {
+    return ;
+  }
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
     version: 'draft',
   })

@@ -1,6 +1,6 @@
-import { StoryData } from "storyblok-js-client";
+import { ISbStoryData } from 'storyblok-js-client'
 
 export interface PageProps {
-    readonly story: StoryData;
-    readonly key: string;
+  readonly story: ISbStoryData
+  readonly key: string
 }
