@@ -1,12 +1,12 @@
 import { StoryblokComponent } from "../StoryblokComponent";
+import { storyblokEditable } from "@storyblok/js";
 
+const PageStory = ( { blok } ) => {
 
-
-const PageStory = ({blok}) => {
-    return (<main >
-            {blok.body.map((nestedBlok) => (
-                <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid}/>
-            ))}
+    return ( <main {...storyblokEditable(blok)}>
+            { blok.body.map( ( nestedBlok ) => (
+                <StoryblokComponent blok={ nestedBlok } key={ nestedBlok._uid }/>
+            ) ) }
         </main>
     )
 };

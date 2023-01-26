@@ -1,6 +1,5 @@
 import styles from './page.module.css'
 import { getStory } from "../utils/storyblok";
-import PageStory from "../components/page/PageStory";
 import { StoryblokComponent } from "../components/StoryblokComponent";
 
 async function fetchData() {
@@ -14,8 +13,8 @@ async function fetchData() {
 export default async function Home() {
   const {props} = await fetchData();
   return (
-    <main className={styles.container}>
-      <StoryblokComponent blok={props.story.content}/>
-    </main>
+        <main className={styles.container}>
+          <StoryblokComponent blok={props.story.content}/>
+        </main>
   )
 }
