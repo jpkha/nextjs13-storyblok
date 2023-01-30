@@ -11,7 +11,7 @@ async function fetchData() {
   }
 }
 export default async function Home() {
-  const { props } = await fetchData()
+  const { props } = await fetchData();
   return (
     <main className={styles.container}>
       <StoryblokComponent blok={props.story.content} />

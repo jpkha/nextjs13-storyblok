@@ -6,9 +6,7 @@ interface TeaserProps extends SbBlokData {
   headline: string
 }
 
-const Teaser: FunctionComponent<BlokComponentModel<TeaserProps>> = ({
-  blok,
-}) => {
+const Teaser: FunctionComponent<BlokComponentModel<TeaserProps>> = ({ blok }) => {
   return <h2 {...storyblokEditable(blok)}>{blok.headline}</h2>
 }
 
