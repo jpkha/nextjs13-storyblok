@@ -17,7 +17,7 @@ export default async function Home() {
     const { props } = await fetchData();
     const data = previewData() as {key: string};
     const isPreviewMode = !!data && data.key === 'MY_SECRET_TOKEN';
-    const version = 'draft';
+    const version = process.env.NEXT_PUBLIC_STORYBLOK_VERSION;
     return (
         <main className={ styles.container }>
             { isPreviewMode || version === 'draft' ?

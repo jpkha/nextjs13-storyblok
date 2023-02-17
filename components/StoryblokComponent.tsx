@@ -1,4 +1,3 @@
-import { previewData } from 'next/headers';
 import React, { forwardRef } from 'react'
 import { ComponentsMap } from './components-list'
 import { SbBlokData } from '@storyblok/js'

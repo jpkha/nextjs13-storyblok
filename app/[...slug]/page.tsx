@@ -38,7 +38,7 @@ export default async function Page({ params } : {params: Paths}) {
   const { props } = await fetchData(params);
   const data = previewData() as {key: string};
   const isPreviewMode = !!data && data.key === 'MY_SECRET_TOKEN';
-  const version = 'draft';
+  const version = process.env.NEXT_PUBLIC_STORYBLOK_VERSION;
   return (
     <main className={styles.container}>
       { isPreviewMode || version === 'draft' ?
