@@ -1,6 +1,8 @@
 import styles from '../page.module.css'
 import { StoryblokComponent } from '../../components/StoryblokComponent'
 import { getLinks, getStory } from '../../utils/storyblok'
+import StoryblokBridge from "../../components/StoryblokBridge";
+import { previewData } from "next/headers";
 
 interface Paths {
   slug: string[]
@@ -33,10 +35,16 @@ async function fetchData(params: Paths) {
 }
 
 export default async function Page({ params } : {params: Paths}) {
-  const { props } = await fetchData(params)
+  const { props } = await fetchData(params);
+  const data = previewData() as {key: string};
+  const isPreviewMode = !!data && data.key === 'MY_SECRET_TOKEN';
+  const version = 'draft';
   return (
     <main className={styles.container}>
-      <StoryblokComponent blok={props.story.content} />
+      { isPreviewMode || version === 'draft' ?
+          <StoryblokBridge blok={ props.story.content }/> :
+          <StoryblokComponent blok={ props.story.content }/>
+      }
     </main>
   )
 }
