@@ -26,7 +26,4 @@ export default async function preview(req, res) {
 
   res.writeHead(307, { Location: location })
   res.end()
-
-  // Redirect to the path from entry
-  // res.redirect(`/${slug}?${params[1]}`)
 }

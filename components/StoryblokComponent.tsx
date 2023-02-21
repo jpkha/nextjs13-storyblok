@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { FunctionComponent } from 'react'
 import { ComponentsMap } from './components-list'
 import { SbBlokData } from '@storyblok/js'
 
@@ -7,21 +7,15 @@ interface StoryblokComponentProps {
   [key: string]: unknown
 }
 
-// @ts-ignore
-export function StoryblokComponent({ blok, ...restProps }, ref): forwardRef<
-    HTMLElement,
-    StoryblokComponentProps
-> {
+export const StoryblokComponent: FunctionComponent<StoryblokComponentProps> = ({ blok, ...restProps }) => {
   if (!blok) {
     console.error("Please provide a 'blok' property to the StoryblokComponent")
     return <div>Please provide a blok property to the StoryblokComponent</div>
   }
   if(blok.component) {
-    // @ts-ignore
     const Component = getComponent(blok.component)
     if (Component) {
-      // @ts-ignore
-      return <Component ref={ref} blok={blok} {...restProps} />
+      return <Component blok={blok} {...restProps} />
     }
   }
   return <></>

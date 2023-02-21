@@ -74,7 +74,7 @@ In order to link your components to their equivalents you created in Storyblok:
 First, let's create a StoryblokComponent where we can load dynamically the component `StoryblokComponent.tsx`:
 
 ```javascript
-import React, { forwardRef } from 'react'
+import React, { FunctionComponent } from 'react'
 import { ComponentsMap } from './components-list'
 import { SbBlokData } from '@storyblok/js'
 
@@ -83,21 +83,15 @@ interface StoryblokComponentProps {
     [key: string]: unknown
 }
 
-// @ts-ignore
-export function StoryblokComponent({ blok, ...restProps }, ref): forwardRef<
-  HTMLElement,
-  StoryblokComponentProps
-  > {
+export const StoryblokComponent: FunctionComponent<StoryblokComponentProps> = ({ blok, ...restProps }) => {
   if (!blok) {
     console.error("Please provide a 'blok' property to the StoryblokComponent")
     return <div>Please provide a blok property to the StoryblokComponent</div>
   }
   if(blok.component) {
-    // @ts-ignore
     const Component = getComponent(blok.component)
     if (Component) {
-      // @ts-ignore
-      return <Component ref={ref} blok={blok} {...restProps} />
+      return <Component blok={blok} {...restProps} />
     }
   }
   return <></>
@@ -112,6 +106,7 @@ const getComponent = (componentKey: string) => {
 // @ts-ignore
   return ComponentsMap[componentKey]
 }
+
 ```
 
 Then create a file `components-list.ts`:
@@ -121,8 +116,13 @@ import PageStory from './page/PageStory'
 import Grid from './grid/Grid'
 import Feature from './feature/Feature'
 import Teaser from './teaser/Teaser'
+import { FunctionComponent } from 'react'
+import { BlokComponentModel } from '../models/blok-component.model'
 
-export const ComponentsMap = {
+interface ComponentsMapProps {
+  [key: string]: FunctionComponent<BlokComponentModel<any>>;
+}
+export const ComponentsMap: ComponentsMapProps = {
   page: PageStory,
   grid: Grid,
   feature: Feature,
@@ -339,9 +339,6 @@ export default async function preview(req, res) {
 
   res.writeHead(307, { Location: location })
   res.end()
-
-  // Redirect to the path from entry
-  // res.redirect(`/${slug}?${params[1]}`)
 }
 ```
 
