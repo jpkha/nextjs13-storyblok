@@ -1,11 +1,12 @@
 import styles from '../page.module.css'
-import { StoryblokComponent } from '../../components/StoryblokComponent'
-import { getLinks, getStory } from '../../utils/storyblok'
-import StoryblokBridge from "../../components/StoryblokBridge";
+import { StoryblokComponent } from '../../../components/StoryblokComponent'
+import { getLinks, getStory } from '../../../utils/storyblok'
+import StoryblokBridge from "../../../components/StoryblokBridge";
 import { draftMode } from "next/headers";
 
 interface Paths {
-  slug: string[]
+  slug: string[],
+  lang?: string
 }
 export async function generateStaticParams() {
   const links = await getLinks()
@@ -14,7 +15,6 @@ export async function generateStaticParams() {
     if (links[linkKey].is_folder || links[linkKey].slug === 'home') {
       return
     }
-
     const slug = links[linkKey].slug
     let splittedSlug = slug.split('/')
     paths.push({ slug: splittedSlug })
@@ -26,7 +26,7 @@ export async function generateStaticParams() {
 async function fetchData(params: Paths) {
   let slug = params.slug ? params.slug.join('/') : 'home'
 
-  const story = await getStory(slug)
+  const story = await getStory(slug, params.lang)
   return {
     story: story ?? false
   }

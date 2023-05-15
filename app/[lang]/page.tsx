@@ -1,21 +1,21 @@
-import styles from './page.module.css'
-import { getStory } from '../utils/storyblok'
-import StoryblokBridge from "../components/StoryblokBridge";
-import { StoryblokComponent } from "../components/StoryblokComponent";
-import { draftMode } from 'next/headers';
+import { getStory } from "../../utils/storyblok";
 
-async function fetchData() {
-  const story = await getStory( 'home' );
+import styles from './page.module.css'
+import { draftMode } from 'next/headers';
+import { StoryblokComponent } from "../../components/StoryblokComponent";
+import StoryblokBridge from "../../components/StoryblokBridge";
+
+async function fetchData(lang: string) {
+  const story = await getStory( 'home', lang );
   return {
     story: story ?? false
   }
 }
 
-export default async function Home() {
-  const { story } = await fetchData();
+export default async function Home({ params: { lang } }: {params: {lang: string}}) {
+  const { story } = await fetchData(lang);
   const { isEnabled } = draftMode();
   const version = process.env.NEXT_PUBLIC_STORYBLOK_VERSION;
-  console.log(isEnabled)
   return (
     <main className={ styles.container }>
       <div>Preview mode :{JSON.stringify(isEnabled)}</div>

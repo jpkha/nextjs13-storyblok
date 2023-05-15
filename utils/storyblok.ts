@@ -22,12 +22,14 @@ export async function getLinks() {
   return links
 }
 
-export async function getStory(slug: string) {
+export async function getStory(slug: string, language = 'en') {
   if(!storyblokApi) {
     return ;
   }
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
     version: process.env.NEXT_PUBLIC_STORYBLOK_VERSION as 'draft' | 'published',
+    language,
+    fallback_lang: 'en'
   })
   const story = data ? data.story : null
   return story
